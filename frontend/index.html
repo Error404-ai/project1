@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Intelligent News Summarizer & Sentiment Analyzer</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>📰 Intelligent News Summarization &amp; Sentiment Analysis</h1>
+      <p class="subtitle">NLP preprocessing · Abstractive summarization · Sentiment detection · Keyword &amp; entity extraction · Question answering</p>
+    </header>
+
+    <main class="app-main">
+      <section class="input-section">
+        <label for="article-input">Paste a news article</label>
+        <textarea id="article-input" placeholder="Paste the full news article text here..."></textarea>
+
+        <div class="question-row">
+          <input type="text" id="question-input" placeholder="Optional: ask a question about the article (e.g. 'Who is involved?')" />
+        </div>
+
+        <div class="button-row">
+          <button id="analyze-btn">Analyze Article</button>
+          <button id="clear-btn" class="secondary">Clear</button>
+        </div>
+        <div id="status" class="status"></div>
+      </section>
+
+      <section id="results" class="results hidden">
+        <div class="card stats-card">
+          <h3>Article Stats</h3>
+          <div id="stats-output" class="stats-grid"></div>
+        </div>
+
+        <div class="card">
+          <h3>Summary</h3>
+          <p id="summary-output"></p>
+        </div>
+
+        <div class="card">
+          <h3>Sentiment</h3>
+          <div id="sentiment-output"></div>
+        </div>
+
+        <div class="card">
+          <h3>Keywords</h3>
+          <div id="keywords-output" class="tag-list"></div>
+        </div>
+
+        <div class="card">
+          <h3>Named Entities</h3>
+          <div id="entities-output" class="tag-list"></div>
+        </div>
+
+        <div id="qa-card" class="card hidden">
+          <h3>Answer</h3>
+          <p id="qa-output"></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>Backend: FastAPI + HuggingFace Transformers (open-source, no API key required)</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

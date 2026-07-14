@@ -1,0 +1,211 @@
+/* ---------------------------------------------------------------
+   Theme: "Newsroom desk" — leans into the subject matter (news wire
+   analysis) instead of a generic dashboard look.
+   Palette: paper white, ink navy, wire-red editor accent, brass rule.
+----------------------------------------------------------------- */
+:root {
+  --paper: #f6f4ef;
+  --ink: #1b2027;
+  --ink-soft: #4a5058;
+  --rule: #cfc9ba;
+  --wire-red: #a3272c;
+  --brass: #9c7a3c;
+  --card-bg: #ffffff;
+  --pos: #2f6b4f;
+  --neg: #a3272c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Georgia', 'Iowan Old Style', serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.app-header {
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.9rem;
+  letter-spacing: 0.01em;
+  margin: 0 0 0.4rem;
+}
+
+.subtitle {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+label {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+textarea, input[type="text"] {
+  width: 100%;
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  padding: 0.9rem;
+  border: 1px solid var(--rule);
+  background: var(--card-bg);
+  color: var(--ink);
+  border-radius: 2px;
+}
+
+textarea {
+  min-height: 220px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.question-row { margin-top: 0.9rem; }
+
+.button-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+button {
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.7rem 1.4rem;
+  border: 1px solid var(--ink);
+  background: var(--wire-red);
+  color: #fff;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform 0.08s ease, opacity 0.15s ease;
+}
+
+button:hover { opacity: 0.88; }
+button:active { transform: translateY(1px); }
+
+button.secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--rule);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status {
+  margin-top: 0.75rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  color: var(--brass);
+  min-height: 1.2em;
+}
+
+.results { margin-top: 2.5rem; }
+.results.hidden, .hidden { display: none !important; }
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--wire-red);
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1.1rem;
+  border-radius: 2px;
+}
+
+.card h3 {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin: 0 0 0.7rem;
+}
+
+.card p { margin: 0; line-height: 1.6; }
+
+.stats-grid {
+  display: flex;
+  gap: 2rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+
+.stats-grid span.label { color: var(--ink-soft); display: block; font-size: 0.7rem; }
+.stats-grid span.value { font-size: 1.3rem; font-weight: bold; }
+
+#sentiment-output {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2px;
+}
+
+#sentiment-output.POSITIVE { color: var(--pos); }
+#sentiment-output.NEGATIVE { color: var(--neg); }
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  border: 1px solid var(--rule);
+  padding: 0.25rem 0.6rem;
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.tag .label-tag {
+  color: var(--brass);
+  margin-left: 0.35rem;
+  font-size: 0.7rem;
+}
+
+.app-footer {
+  margin-top: 3rem;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .stats-grid { flex-wrap: wrap; gap: 1rem; }
+  .button-row { flex-direction: column; }
+}
