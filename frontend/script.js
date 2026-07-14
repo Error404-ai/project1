@@ -1,4 +1,4 @@
-const API_BASE = "https://project1-cx62.onrender.com/";
+const API_BASE = "https://project1-cx62.onrender.com";
 
 const articleInput = document.getElementById("article-input");
 const questionInput = document.getElementById("question-input");
