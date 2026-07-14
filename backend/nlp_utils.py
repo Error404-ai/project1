@@ -7,12 +7,14 @@ preprocessing can run fast and independently of the heavier transformer models.
 
 import re
 import string
+from functools import lru_cache
+
 import nltk
 import spacy
 import yake
 
 # ---------------------------------------------------------------------------
-# One-time downloads / model loads
+# One-time downloads
 # ---------------------------------------------------------------------------
 # NLTK data needed for tokenization + stopwords
 for pkg in ["punkt", "punkt_tab", "stopwords"]:
@@ -26,12 +28,23 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 
 STOPWORDS = set(stopwords.words("english"))
 
+
+# ---------------------------------------------------------------------------
 # spaCy is used for Named Entity Recognition (people, orgs, locations, dates, etc.)
-# Run `python -m spacy download en_core_web_sm` once before starting the server.
-try:
-    NLP = spacy.load("en_core_web_sm")
-except OSError:
-    NLP = None  # will raise a clear error at request time if not installed
+# Loaded lazily on first use (not at import time) so app startup is fast and
+# memory stays low until an /api/entities or /api/analyze request actually
+# needs it. Run `python -m spacy download en_core_web_sm` once before starting
+# the server, or install it via requirements.txt as a direct wheel URL.
+# ---------------------------------------------------------------------------
+@lru_cache(maxsize=1)
+def get_nlp():
+    try:
+        return spacy.load("en_core_web_sm")
+    except OSError:
+        raise RuntimeError(
+            "spaCy model 'en_core_web_sm' is not installed. "
+            "Run: python -m spacy download en_core_web_sm"
+        )
 
 
 def clean_text(raw_text: str) -> str:
@@ -90,12 +103,8 @@ def extract_keywords(text: str, max_keywords: int = 10) -> list:
 
 def extract_entities(text: str) -> list:
     """Extracts named entities (people, organizations, locations, dates, etc.) using spaCy."""
-    if NLP is None:
-        raise RuntimeError(
-            "spaCy model 'en_core_web_sm' is not installed. "
-            "Run: python -m spacy download en_core_web_sm"
-        )
-    doc = NLP(text[:100000])  # guard against extremely long inputs
+    nlp = get_nlp()
+    doc = nlp(text[:100000])  # guard against extremely long inputs
     entities = [
         {"text": ent.text, "label": ent.label_}
         for ent in doc.ents
